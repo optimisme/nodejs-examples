@@ -9,7 +9,7 @@ var reverse = require('./arrayReverse.js'),
     arr = ['lorem', 'ipsum', 'ad', 'scripta'];
 
 console.log("------------------------------------------------------");
-console.log("This example shows how to use the 'arrayReverse' object to ");
+console.log("This example shows how to use the 'ArrayReverse' object to ");
 console.log("reverse one 'array' of 'strings' in a non blocking manner.");
 console.log("\nOriginal array:");
 console.log(arr);

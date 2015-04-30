@@ -8,7 +8,7 @@
 var Simplify = require('./arraySimplify.js'),
     simplify = new Simplify(),
     limit = 5,
-    list = [
+    arr = [
         [100, 0.10],
         [101, 0.15],
         [102, 0.35],
@@ -35,9 +35,9 @@ var Simplify = require('./arraySimplify.js'),
 console.log("------------------------------------------------------");
 console.log("This example shows how to use 'ArraySimplify' object'.");
 console.log("Using the next array of 'position/value' pairs:");
-console.log(list);
+console.log(arr);
 
-simplify.compute(limit, list, function (rst) {
+simplify.compute(limit, arr, function (rst) {
     'use strict';
     console.log("\nThe 'simplified' " + limit + " values array is:");
     console.log(JSON.stringify(rst));

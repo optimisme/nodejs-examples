@@ -11,7 +11,7 @@ var sort = require('./arraySort.js'),
     arrO = [{min: 9, max: 1}, {min: 1, max: 1}, {min: 2, max: 1}, {min: 4, max: 1}, {min: 2, max: 1}, {min: 3, max: 1}];
 
 console.log("------------------------------------------------------");
-console.log("This example shows how to use the 'arraySort' object to ");
+console.log("This example shows how to use the 'ArraySort' object to ");
 console.log("sort one 'array' of 'strings' in a non blocking manner.");
 console.log("\nOriginal 'String' array:");
 console.log(arrS);
