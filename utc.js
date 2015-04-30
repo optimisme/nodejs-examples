@@ -20,7 +20,6 @@ UTC.getDate = function (timestamp) {
     return date;
 };
 
-
 module.exports = UTC;
 
 

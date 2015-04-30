@@ -5,7 +5,7 @@
 /*global require*/
 /*global setImmediate*/
 
-var Simplify = require('./simplify.js'),
+var Simplify = require('./arraySimplify.js'),
     simplify = new Simplify(),
     limit = 5,
     list = [
@@ -33,11 +33,11 @@ var Simplify = require('./simplify.js'),
     ];
 
 console.log("------------------------------------------------------");
-console.log("This example shows how to use 'Simplify' object'.");
+console.log("This example shows how to use 'ArraySimplify' object'.");
 console.log("Using the next array of 'position/value' pairs:");
 console.log(list);
 
-simplify.run(limit, list, function (rst) {
+simplify.compute(limit, list, function (rst) {
     'use strict';
     console.log("\nThe 'simplified' " + limit + " values array is:");
     console.log(JSON.stringify(rst));

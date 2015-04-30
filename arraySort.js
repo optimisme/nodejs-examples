@@ -5,21 +5,21 @@
 /*global require*/
 /*global setImmediate*/
 
-var SortStr = function (str, next) {
+var SortObj = function (val, next) {
         'use strict';
-        this.str = str;
+        this.val = val;
         this.next = next;
     },
-    SortObj = function () {
+    SortList = function () {
         'use strict';
         this.first = null;
         this.counter = 0;
     },
-    SortArray = function () {
+    ArraySort = function () {
         'use strict';
     };
 
-SortObj.prototype.add = function (str, callback) {
+SortList.prototype.add = function (val, compare, callback) {
     'use strict';
     var self = this,
         strCmp = function (a, b) {
@@ -33,22 +33,31 @@ SortObj.prototype.add = function (str, callback) {
             if (i === n) {
                 return 0;
             }
-            return a.charAt(i) > b.charAt(i) ? -1 : 1;
+            return a.charAt(i) < b.charAt(i) ? -1 : 1;
         },
         recursive = function (ptr, first) {
-            var tmp = new SortStr('', null);
-            if (strCmp(str, ptr.str) > 0) {
-                tmp.str = ptr.str;
+            var tmp = new SortObj('', null),
+                cmp = false;
+
+            if (compare !== null) {
+                cmp = compare(val, ptr.val);
+            } else if (typeof val === 'string') {
+                cmp = strCmp(val, ptr.val);
+            } else {
+                cmp = val - ptr.val;
+            }
+            if (cmp < 0) {
+                tmp.val = ptr.val;
                 tmp.next = ptr.next;
                 if (first) {
-                    self.first = new SortStr(str, new SortStr(tmp.str, tmp.next));
+                    self.first = new SortObj(val, new SortObj(tmp.val, tmp.next));
                 } else {
-                    ptr.str = str;
-                    ptr.next = new SortStr(tmp.str, tmp.next);
+                    ptr.val = val;
+                    ptr.next = new SortObj(tmp.val, tmp.next);
                 }
                 callback();
             } else if (ptr.next === null) {
-                ptr.next = new SortStr(str, null);
+                ptr.next = new SortObj(val, null);
                 callback();
             } else {
                 setImmediate(function () {
@@ -60,19 +69,19 @@ SortObj.prototype.add = function (str, callback) {
     this.counter = this.counter + 1;
 
     if (this.first === null) {
-        this.first = new SortStr(str, null);
+        this.first = new SortObj(val, null);
         callback();
     } else {
         recursive(this.first, true);
     }
 };
 
-SortObj.prototype.getArray = function (callback) {
+SortList.prototype.getArray = function (callback) {
     'use strict';
     var self = this,
         rst = [],
         recursive = function (pos, ptr) {
-            rst[pos] = ptr.str;
+            rst[pos] = ptr.val;
             if (ptr.next !== null) {
                 setImmediate(function () {
                     recursive(pos + 1, ptr.next);
@@ -86,20 +95,34 @@ SortObj.prototype.getArray = function (callback) {
     recursive(0, this.first);
 };
 
-SortArray.run = function (arr, callback) {
+ArraySort.compute = function (arr, arg1, arg2) {
     'use strict';
-    var sortObj = new SortObj(),
+    var self = this,
+        compare = null,
+        callback = null,
+        sortList = new SortList(),
         recursive = function (pos) {
             if (pos < arr.length) {
-                sortObj.add(arr[pos], function () {
+                sortList.add(arr[pos], compare, function () {
                     recursive(pos + 1);
                 });
             } else {
-                sortObj.getArray(callback);
+                sortList.getArray(callback);
             }
         };
+
+    if (arguments.length === 2) {
+
+        compare = null;
+        callback = arg1;
+
+    } else if (arguments.length === 3) {
+
+        compare = arg1;
+        callback = arg2;
+    }
 
     recursive(0);
 };
 
-module.exports = SortArray;
+module.exports = ArraySort;

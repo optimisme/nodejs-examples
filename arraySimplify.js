@@ -5,14 +5,14 @@
 /*global require*/
 /*global setImmediate*/
 
-var Simplify = function () {
+var ArraySimplify = function () {
         'use strict';
         this.limit = 0;
         this.arrData = [];
         this.arrSteps = [];
     };
 
-Simplify.prototype.run = function (limit, arr, callback) {
+ArraySimplify.prototype.compute = function (limit, arr, callback) {
     'use strict';
 
     // Example of 'arr' data:
@@ -26,11 +26,11 @@ Simplify.prototype.run = function (limit, arr, callback) {
     if (this.arrData.length <= this.limit) {
         callback(arr);
     } else {
-        this.simplifyArr();
+        this.recursion();
     }
 };
 
-Simplify.prototype.getSqSegDist = function (p, p1, p2) {
+ArraySimplify.prototype.getSqSegDist = function (p, p1, p2) {
     'use strict';
     var x = p1[0],
         y = p1[1],
@@ -58,7 +58,7 @@ Simplify.prototype.getSqSegDist = function (p, p1, p2) {
     return dx * dx + dy * dy;
 };
 
-Simplify.prototype.getMaximumStepDistance = function (begin, end, callback) {
+ArraySimplify.prototype.getMaximumStepDistance = function (begin, end, callback) {
     'use strict';
     var self = this,
         maxObj = {distance: 0, pos: begin},
@@ -87,7 +87,7 @@ Simplify.prototype.getMaximumStepDistance = function (begin, end, callback) {
     recursive(begin);
 };
 
-Simplify.prototype.addNextStep = function (callback) {
+ArraySimplify.prototype.addNextStep = function (callback) {
     'use strict';
     var self = this,
         maxObj = {distance: 0, position: 0, step: 0},
@@ -119,7 +119,7 @@ Simplify.prototype.addNextStep = function (callback) {
     recursive(0);
 };
 
-Simplify.prototype.buildResult = function () {
+ArraySimplify.prototype.buildResult = function () {
     'use strict';
     var self = this,
         stepLimit = self.arrSteps.length,
@@ -152,7 +152,7 @@ Simplify.prototype.buildResult = function () {
     recursive(0);
 };
 
-Simplify.prototype.simplifyArr = function () {
+ArraySimplify.prototype.recursion = function () {
     'use strict';
     var self = this,
         recursive = function () {
@@ -174,4 +174,4 @@ Simplify.prototype.simplifyArr = function () {
     recursive();
 };
 
-module.exports = Simplify;
+module.exports = ArraySimplify;
