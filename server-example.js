@@ -28,6 +28,7 @@ process.on('exit', function (code) {
 app.start();
 
 // Test server:
+console.log("\nWait for calls...");
 var callServer = function (path) {
     'use strict';
     var self = this,
