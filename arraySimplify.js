@@ -160,9 +160,9 @@ ArraySimplify.prototype.recursion = function () {
             if (self.arrSteps.length < self.limit) {
 
                 self.addNextStep(function () {
-                    setImmediate(function () {
+                    setTimeout(function () {
                         recursive();
-                    });
+                    }, 0);
                 });
 
             } else {

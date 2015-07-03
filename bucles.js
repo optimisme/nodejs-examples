@@ -3,7 +3,6 @@
 /*global module*/
 /*global process*/
 /*global require*/
-/*global setImmediate*/
 
 var Bucles = function () {
         'use strict';
@@ -16,9 +15,9 @@ Bucles.recursiveFor = function (expr, begin, condition, modifier, call, callback
         recursive = function () {
             if (condition()) {
                 call(function () {
-                    setImmediate(function () {
+                    setTimeout(function () {
                         recursive();
-                    });
+                    }, 0);
                 });
             } else {
                 callback();
