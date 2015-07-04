@@ -6,6 +6,8 @@
 /*global setImmediate*/
 
 var Bucles = require('./bucles.js'),
+    array = [1, 2, 3, 4, 5],
+    result = [],
     counter = 0;
 
 console.log("------------------------------------------------------");
@@ -38,3 +40,10 @@ Bucles.recursiveFor(
         console.log('Done');
     }
 );
+
+Bucles.recursive(array,
+	function (item, next) {
+		result.push(item * 2);
+	}, function () {
+		console.log(result);
+	});

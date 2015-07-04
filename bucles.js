@@ -30,6 +30,28 @@ Bucles.recursiveFor = function (expr, begin, condition, modifier, call, callback
     recursive();
 };
 
+Bucle.recursive = function (arr, func, callback) {
+    'use strict';
+    var recursive = function (counter, tick) {
+            if (counter < arr.length) {
+                func(arr[counter], function () {
+                    if (tick < 100) {
+                        setImmediate(function () {
+                            recursive(counter + 1, tick + 1);
+                        });
+                    } else {
+                        setTimeout(function () {
+                            recursive(counter + 1, 0);
+                        }, 0);
+                    }
+                });
+            } else {
+                callback();
+            }
+        };
+    recursive(0, 0);
+};
+
 module.exports = Bucles;
 
 
